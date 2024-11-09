@@ -3,10 +3,12 @@ import Heading from '@/components/Heading';
 import Image from 'next/image';
 import Link from 'next/link';
 import {FaChevronLeft} from 'react-icons/fa'
+import getSingleRoom from '@/app/actions/getSingleRoom';
 
-const  Room= ({params}) => {
+const  Room= async ({params}) => {
     const {id}=params;
-    const room=rooms.find((room)=>room.$id===id)
+    const room=await getSingleRoom(id);
+    
     
 
    if (!room){
@@ -37,7 +39,7 @@ const  Room= ({params}) => {
               {room.description}
             </p>
 
-            <ul class="space-y-2">
+            <ul className="space-y-2">
               <li>
                 <span className="font-semibold text-gray-800">Size:</span> {room.sqft} sq
                 ft
