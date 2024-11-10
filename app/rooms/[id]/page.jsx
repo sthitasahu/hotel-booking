@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaChevronLeft } from "react-icons/fa";
 import getSingleRoom from "@/app/actions/getSingleRoom";
-import BookingForm from "@/app/bookings/page";
+import BookingForm from "@/components/BookingForm";
 
 const Room = async ({ params }) => {
   const { id } = params;

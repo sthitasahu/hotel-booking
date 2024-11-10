@@ -3,10 +3,12 @@ import { createSessionClient } from '@/config/appwrite';
 import { cookies } from 'next/headers';
 import { Query } from 'node-appwrite';
 import { redirect } from 'next/navigation';
+import checkAuth from './checkAuth';
 
 
 async function getMyBookings() {
   const sessionCookie = cookies().get('appwrite-session');
+  
   if (!sessionCookie) {
     redirect('/login');
   }
@@ -14,7 +16,13 @@ async function getMyBookings() {
   try {
     const { databases } = await createSessionClient(sessionCookie.value);
 
-    
+    const { user } = await checkAuth();
+
+    if (!user) {
+      return {
+        error: 'You must be logged in to view bookings',
+      };
+    }
 
     // Fetch users bookings
     const { documents: bookings } = await databases.listDocuments(
